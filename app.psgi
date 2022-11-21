@@ -39,10 +39,18 @@ BEGIN {
     Log::Log4perl::init($log4perl_config);
 
 # use a unique package and tell l4p to ignore it when finding the warning location.
-    package MetaCPAN::Web::WarnHandler;
+    package MetaCPAN::Web::LogDispatcher;
     Log::Log4perl->wrapper_register(__PACKAGE__);
-    my $logger = Log::Log4perl->get_logger;
-    $SIG{__WARN__} = sub { $logger ? $logger->warn(@_) : warn @_ };
+
+    $SIG{__WARN__} = sub {
+        my $logger = eval { Log::Log4perl->get_logger };
+        if ($logger) {
+            $logger->warn(@_);
+        }
+        else {
+            warn @_;
+        }
+    };
 }
 
 use lib "$root_dir/lib";
