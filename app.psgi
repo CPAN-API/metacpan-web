@@ -133,6 +133,18 @@ builder {
                 keys %$env
             );
 
+            $env->{'psgix.logger'} = sub {
+
+                package MetaCPAN::Web::LogDispatcher;
+                my $args  = shift;
+                my $level = $args->{level};
+                local $Log::Log4perl::caller_depth
+                    = $Log::Log4perl::caller_depth + 1;
+
+                my $logger = Log::Log4perl->get_logger;
+                $logger->$level( $args->{message} );
+            };
+
             $app->($env);
         };
     };
