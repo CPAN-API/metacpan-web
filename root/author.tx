@@ -122,9 +122,6 @@
         <a href="[% $author.links.cpan_directory %]">CPAN directory</a> ([% $author.release_count.cpan + $author.release_count.latest %])
     </li>
     <li>
-        <a href="[% $author.links.backpan_directory %]" title="See all releases ever done by [% $author.pauseid %], not just those currently on CPAN.">BackPAN directory</a> ([% $author.release_count['backpan-only'] %])
-    </li>
-    <li>
         <a href="[% $author.links.repology %]">Repology</a>
     </li>
 %%  }
@@ -151,11 +148,7 @@
     %%  else {
     <div class="message">
         <strong>Releases</strong>
-        <p>No releases from <a href="/author/[% $author.pauseid %]">[% $author.pauseid %]</a> could be found
-        %%  if $author.release_count["backpan-only"] {
-            <br/><a href="/author/[% $author.pauseid %]">[% $author.pauseid %]</a> has <a href="[% $author.links.backpan_directory %]">[% $author.release_count["backpan-only"] %] distributions on BackPAN</a> that were previously on CPAN.
-        %%  }
-        </p>
+        <p>No releases from <a href="/author/[% $author.pauseid %]">[% $author.pauseid %]</a> could be found</p>
     </div>
     %%  }
     %%  if $faves.0 {
